@@ -151,7 +151,6 @@ class ConsoleMaster(master.Master):
 
         cmd = None
         shell = False
-
         if contenttype:
             c = mailcap.getcaps()
             cmd, _ = mailcap.findmatch(c, contenttype, filename=name)
@@ -167,6 +166,8 @@ class ConsoleMaster(master.Master):
         with self.uistopped():
             try:
                 subprocess.call(cmd, shell=shell)
+                import time
+                time.sleep(0.5)
             except:
                 signals.status_message.send(
                     message="Can't start external viewer: %s" % " ".join(c)
